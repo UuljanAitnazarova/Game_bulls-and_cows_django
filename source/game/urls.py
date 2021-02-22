@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from webapp.views import game_view
+from webapp.views import game_view, history_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', game_view),
+    path('history/', history_view),
 ]

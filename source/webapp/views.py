@@ -2,6 +2,10 @@ from django.shortcuts import render
 
 from .check import Check, track_errors
 
+history_dict = {}
+round = 0
+
+
 def game_view(request):
     if request.method == 'GET':
         return render(request, 'game.html')
@@ -17,12 +21,20 @@ def game_view(request):
                 check = Check(numbers)
                 result = check.check_values()
                 message += result
-            return render(request, 'history.html', {'message' : message})
+            
         except ValueError:
             message += 'The values should be integers'
 
+        global round
+        round += 1
+        history_dict[round] = message
+
+        return render(request, 'result.html', {'message' : message})
 
 
+
+def history_view(request):
+    return render(request, 'history.html', {'history_dict': history_dict })
 
 
 
